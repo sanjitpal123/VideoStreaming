@@ -11,9 +11,9 @@ function MenuAndLogo() {
   }
 
   return (
-    <div className='flex w-[40%] md:w-[20%] h-full gap-4 md:gap-10 items-center'>
-      <img src={Menu} alt="Menu" className="h-[30%] md:h-[60%] cursor-pointer" onClick={()=>HandleClicked()}/>
-      <img src={Logo} alt="Logo" className="h-[30%] md:h-[80%]" />
+    <div className='flex w-[20%] md:w-[20%] h-full gap-4 md:gap-10 items-center'>
+      <img src={Menu} alt="Menu" className="h-[30%] md:h-[50%] cursor-pointer" onClick={()=>HandleClicked()}/>
+      <img src={Logo} alt="Logo" className="h-[30%] hidden md:block md:h-[50%]" />
     </div>
   );
 }
