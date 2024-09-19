@@ -4,6 +4,7 @@ const initialState = {
     clicked: false
 };
 
+
 const CheckingClicked = createSlice({
     name: 'NavClickedCheck',
     initialState,
