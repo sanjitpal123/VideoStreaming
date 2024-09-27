@@ -2,7 +2,7 @@
 import AxiosInstanceForHomePageData from '../Helpers/AxiosInstance';
 import { Api_Key } from '../Helpers/ApiKey';
 
-async function FetchHomePageData() {
+async function FetchHomePageData(Page=null) {
     try {
  
         const endpoint = 'videos'; 
@@ -14,7 +14,9 @@ async function FetchHomePageData() {
                
                 part: 'snippet,statistics', 
                 chart: 'mostPopular',
-                maxResults:90
+                maxResults:500,
+                
+
             }
         });
 

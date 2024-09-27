@@ -1,27 +1,31 @@
-import SimpleCollapse from "./Components/Demo/Demo"
-import Navbar from "./Components/Header/Navbar"
-import SideBar from "./Components/SideBar/SideBar"
-import { useSelector } from "react-redux"
-import HomePageDataDisplay from "./Components/HomePageData/HomePageData"
-
+import SimpleCollapse from "./Components/Demo/Demo";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SharedCom from "./Shared/SharedLayout";
+import HomePage from "./Components/HomePageData/HomePageComponent";
+import SearchResultDisplay from "./SearchResult/SearchResults";
 
 function App() {
-const Clicked=useSelector((state)=>state.clickedCheck.clicked);
-console.log("fdf",Clicked)
+  const Clicked = useSelector((state) => state.clickedCheck.clicked);
+  console.log("fdf", Clicked);
 
   return (
     <>
-    <Navbar/>
-     {/* <h1>Welcome to Streaming app setup ( delete this when you start )</h1>
-     <SimpleCollapse/> 
-     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos, quo.</p> */}
-     <div className=" flex">
-     <SideBar/>
-     <HomePageDataDisplay/>
-     </div>
-    
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SharedCom />}>
+            <Route index element={<HomePage />} /> 
+            <Route
+              path="Search-Query/:Query"
+              element={
+                <SearchResultDisplay/>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
