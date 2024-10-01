@@ -1,86 +1,81 @@
 import { useEffect, useState } from "react";
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import FetchHomePageData from "../../Services/FetchHomeData";
-import FetchingSideBarClickedData from "../../Services/FetchingSidbarData";
+import QueryDataFetch from "../../Services/FetchQueryData";
 import { useSelector } from "react-redux";
-
+import UploadedTimeCalculate from "../../utils/TimeDisplay";
 function HomePageDataDisplay() {
   const [Data, SetData] = useState([]);
   const SideBarClickedText = useSelector((state) => state.sidebar.clicked);
+  const [Page, SetPage] = useState(1);
+  const [Loading, SetLoading] = useState(false);
 
   useEffect(() => {
-    if (SideBarClickedText === 'Home') {
-      Fetching();
-    } else {
-      FetchingSideBarData();
+    Fetching();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.scrollHeight - 5 &&
+        !Loading
+      ) {
+        SetPage((prevPage) => prevPage + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [Loading]);
+
+  useEffect(() => {
+    if (Page > 1) {
+      FetchMoreData();
     }
-  }, [SideBarClickedText]);
+  }, [Page]);
 
-
-// called below sidebar clicked data 
-  async function FetchingSideBarData() {
+  async function FetchMoreData() {
+    SetLoading(true);
     try {
-      const response = await FetchingSideBarClickedData(SideBarClickedText);
-      const updatedData = response.items.map((item) => ({
-        ...item,
-        timeAgo: calculateTimeAgo(item.snippet.publishedAt),
-      }));
-      SetData(updatedData);
+      const response = await FetchHomePageData(Page);
+      const processedData = UploadedTimeCalculate(response);
+      SetData((prevData) => [...prevData, ...processedData]);
     } catch (error) {
-      console.error("Error fetching sidebar data:", error);
+      console.error("Error fetching more data:", error);
+    } finally {
+      SetLoading(false);
     }
   }
-  // Sidebar called data end here
 
-// Calling by default data or home data 
   async function Fetching() {
     try {
-      const response = await FetchHomePageData();
-      const updatedData = response.items.map((item) => ({
-        ...item,
-        timeAgo: calculateTimeAgo(item.snippet.publishedAt),
-      }));
-      SetData(updatedData);
+      const response = await FetchHomePageData(Page);
+      const processedData = UploadedTimeCalculate(response);
+      SetData(processedData);
     } catch (error) {
       console.error("Error fetching home page data:", error);
     }
   }
-  // By default data or home data function called is end here
-
-  // Calcualating time , means when the video was posted 
-  function calculateTimeAgo(date) {
-    let newdate = new Date(date);
-    let currentTime = new Date();
-
-    let videoPostedYear = newdate.getFullYear();
-    let videoPostedMonth = newdate.getMonth() + 1;
-    let videoPostedDay = newdate.getDate();
-
-    let currentYear = currentTime.getFullYear();
-    let currentMonth = currentTime.getMonth() + 1;
-    let currentDay = currentTime.getDate();
-
-    if (currentYear - videoPostedYear >= 1) {
-      return currentYear - videoPostedYear + " year(s) ago";
-    } else if (currentMonth - videoPostedMonth >= 1) {
-      return currentMonth - videoPostedMonth + " month(s) ago";
-    } else if (currentDay - videoPostedDay >= 1) {
-      return currentDay - videoPostedDay + " day(s) ago";
-    } else {
-      return "Today";
-    }
-  }
-  // calculation is end here 
 
   return (
-    <div className="flex flex-wrap gap-6 mt-[70px] ml-[15%] w-[80%] justify-center">
+    <div className="flex flex-wrap gap-6 mt-20 lg:ml-[15%] md:w-[85%] md:ml-[15%] lg:w-[85%] w-full justify-center">
       {Data.length > 0 ? (
         Data.map((Item, index) => (
           <Card
             sx={{
-              maxWidth: "360px", 
-              boxShadow: "none", 
-              borderRadius: "8px", 
+              maxWidth: "360px",
+              boxShadow: "none",
+              borderRadius: "8px",
               overflow: "hidden",
               backgroundColor: "#fff",
               display: "flex",
@@ -91,7 +86,7 @@ function HomePageDataDisplay() {
             <CardActionArea>
               <CardMedia
                 component="img"
-                height="200" 
+                height="200"
                 sx={{ objectFit: "cover" }}
                 image={Item.snippet.thumbnails.high.url}
                 alt="Video thumbnail"
@@ -109,7 +104,8 @@ function HomePageDataDisplay() {
                     mb: 1,
                   }}
                 >
-                  {Item.snippet.title?.slice(0, 60) + (Item.snippet.title?.length > 60 ? "..." : "")}
+                  {Item.snippet.title?.slice(0, 60) +
+                    (Item.snippet.title?.length > 60 ? "..." : "")}
                 </Typography>
                 <Typography
                   variant="body2"

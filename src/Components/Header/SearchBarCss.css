@@ -1,0 +1,9 @@
+.element-with-scroll {
+    overflow: auto; /* Ensure the content is scrollable */
+    scrollbar-width: none; /* Hide scrollbar */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .element-with-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
