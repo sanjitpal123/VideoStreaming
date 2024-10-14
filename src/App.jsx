@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SharedCom from "./Shared/SharedLayout";
 import HomePage from "./Components/HomePageData/HomePageComponent";
 import SearchResultDisplay from "./SearchResult/SearchResults";
+import VideoDisplay from "./VideoDisplay/vidoedisplay";
 
 function App() {
   const Clicked = useSelector((state) => state.clickedCheck.clicked);
@@ -21,6 +22,7 @@ function App() {
                 <SearchResultDisplay/>
               }
             />
+            <Route  path="Video/:videoId/:channelId" element={<VideoDisplay/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

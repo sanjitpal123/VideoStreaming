@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-} from "@mui/material";
-import FetchHomePageData from "../../Services/FetchHomeData";
-import QueryDataFetch from "../../Services/FetchQueryData";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import FetchHomePageData from "../../Services/FetchHomeData";
 import UploadedTimeCalculate from "../../utils/TimeDisplay";
+
 function HomePageDataDisplay() {
+  const Navigator = useNavigate();
   const [Data, SetData] = useState([]);
   const SideBarClickedText = useSelector((state) => state.sidebar.clicked);
   const [Page, SetPage] = useState(1);
@@ -67,68 +62,40 @@ function HomePageDataDisplay() {
     }
   }
 
+  function RoutingTovideo(id, ChannelId) {
+    Navigator(`/Video/${id}/${ChannelId}`);
+  }
+
   return (
-    <div className="flex flex-wrap gap-6 mt-20 lg:ml-[15%] md:w-[85%] md:ml-[15%] lg:w-[85%] w-full justify-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20 lg:ml-[15%] md:w-[95%]  md:ml-[3%] lg:w-[85%] w-full justify-center bg-gray-900 text-white p-6">
       {Data.length > 0 ? (
         Data.map((Item, index) => (
-          <Card
-            sx={{
-              maxWidth: "360px",
-              boxShadow: "none",
-              borderRadius: "8px",
-              overflow: "hidden",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
-            }}
+          <div
+            onClick={() => RoutingTovideo(Item.id, Item.snippet.channelId)}
+            className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer p-2 m-1"
             key={index}
           >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="200"
-                sx={{ objectFit: "cover" }}
-                image={Item.snippet.thumbnails.high.url}
+            <div>
+              <img
+                src={Item.snippet.thumbnails.high.url}
                 alt="Video thumbnail"
+                className="w-full h-48 object-cover rounded-lg"
               />
-              <CardContent sx={{ padding: "12px" }}>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    lineHeight: "1.3",
-                    color: "#333",
-                    mb: 1,
-                  }}
-                >
-                  {Item.snippet.title?.slice(0, 60) +
-                    (Item.snippet.title?.length > 60 ? "..." : "")}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "14px", mb: 1 }}
-                >
-                  {Item.snippet.channelTitle}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "12px" }}
-                >
-                  {Item.timeAgo}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-bold mb-2">
+                {Item.snippet.title?.slice(0, 60) +
+                  (Item.snippet.title?.length > 60 ? "..." : "")}
+              </h3>
+              <p className="text-gray-400 text-sm mb-1">
+                {Item.snippet.channelTitle}
+              </p>
+              <p className="text-gray-500 text-xs">{Item.timeAgo}</p>
+            </div>
+          </div>
         ))
       ) : (
-        <Typography variant="body1" sx={{ mt: 2 }}>
-          No data available.
-        </Typography>
+        <p className="text-gray-400 mt-2">No data available.</p>
       )}
     </div>
   );

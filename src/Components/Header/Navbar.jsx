@@ -5,7 +5,7 @@ import Navright from './Navright';
 
 function Navbar() {
   return (
-    <div className='w-full h-[60px]  shadow-lg border-b-2 flex justify-between px-4 md:px-10 items-center fixed top-0 z-[1] bg-white' >
+    <div className='w-full h-[75px]  bg-gray-900 shadow-lg border-b-2 flex justify-between px-4 md:px-10 items-center fixed top-0 z-[1] ' >
       <MenuAndLogo />
       <SearchBar />
       <Navright />
