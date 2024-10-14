@@ -26,48 +26,48 @@ function SideBar() {
         <div>
             {/* Button to toggle sidebar on small screens */}
             <button 
-                className="md:hidden fixed top-1 left-2 z-50 bg-gray-800 text-white p-2 rounded shadow-lg"
+                className="lg:hidden fixed top-2 left-2 z-50 bg-gray-800 text-white p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-105"
                 onClick={toggleSidebar}
             >
-                <i className="fa-solid fa-bars"></i>
+                <i className="fa-solid fa-bars text-xl"></i>
             </button>
 
             {/* Sidebar */}
-            <div className={`w-[75%] xl:block hidden md:w-[15%] bg-gray-900 lg:mt-8 text-white fixed top-[50px] md:h-[100vh] h-auto border-r-2 shadow-lg z-40 transition-transform transform ${
+            <div className={`fixed top-[79px] left-0 h-full bg-gray-900 border-r-2 text-white w-[75%] md:w-[20%] lg:w-[15%] p-5 z-40 transform transition-transform duration-300 ease-in-out ${
                 isOpen ? 'translate-x-0' : '-translate-x-full'
-            } md:translate-x-0`}>
-                <div className="flex px-5 flex-col py-4 justify-center">
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Home')}>
-                        <i className="fa-solid fa-house text-2xl"></i>
-                        <span className="text-sm font-medium">Home</span>
+            } lg:translate-x-0`}>
+                <div className="flex flex-col space-y-6 ">
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Home')}>
+                        <i className="fa-solid fa-house text-xl"></i>
+                        <span className="text-lg font-medium">Home</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Games')}>
-                        <i className="fa-solid fa-gamepad text-2xl"></i>
-                        <span className="text-sm font-medium">Games</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Games')}>
+                        <i className="fa-solid fa-gamepad text-xl"></i>
+                        <span className="text-lg font-medium">Games</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Sports')}>
-                        <i className="fa-solid fa-volleyball text-2xl"></i>
-                        <span className="text-sm font-medium">Sports</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Sports')}>
+                        <i className="fa-solid fa-volleyball text-xl"></i>
+                        <span className="text-lg font-medium">Sports</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('TV')}>
-                        <i className="fa-solid fa-tv text-2xl"></i>
-                        <span className="text-sm font-medium">TV</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('TV')}>
+                        <i className="fa-solid fa-tv text-xl"></i>
+                        <span className="text-lg font-medium">TV</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Tech')}>
-                        <i className="fa-solid fa-microchip text-2xl"></i>
-                        <span className="text-sm font-medium">Tech</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Tech')}>
+                        <i className="fa-solid fa-microchip text-xl"></i>
+                        <span className="text-lg font-medium">Tech</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Music')}>
-                        <i className="fa-solid fa-music text-2xl"></i>
-                        <span className="text-sm font-medium">Music</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Music')}>
+                        <i className="fa-solid fa-music text-xl"></i>
+                        <span className="text-lg font-medium">Music</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('Blog')}>
-                        <i className="fa-solid fa-blog text-2xl"></i>
-                        <span className="text-sm font-medium">Blog</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('Blog')}>
+                        <i className="fa-solid fa-blog text-xl"></i>
+                        <span className="text-lg font-medium">Blog</span>
                     </a>
-                    <a href="#" className="flex items-center gap-3 p-2 hover:bg-gray-700 hover:text-white transition-all duration-300" onClick={() => Navigatin('News')}>
-                        <i className="fa-solid fa-newspaper text-2xl"></i>
-                        <span className="text-sm font-medium">News</span>
+                    <a href="#" className="flex items-center gap-3 p-3 hover:bg-gray-700 hover:text-white transition-all duration-300 rounded-lg" onClick={() => Navigatin('News')}>
+                        <i className="fa-solid fa-newspaper text-xl"></i>
+                        <span className="text-lg font-medium">News</span>
                     </a>
                 </div>
             </div>
@@ -75,7 +75,7 @@ function SideBar() {
             {/* Overlay to close sidebar when clicking outside (on small screens) */}
             {isOpen && (
                 <div 
-                    className="fixed inset-0 bg-black opacity-50 z-30 md:hidden"
+                    className="fixed inset-0 bg-black opacity-60 z-30 md:hidden"
                     onClick={toggleSidebar}
                 ></div>
             )}

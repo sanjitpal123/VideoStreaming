@@ -4,17 +4,13 @@ import { useDispatch } from "react-redux";
 import { Checking } from "../../Redux/NavCloseOpen";
 
 function MenuAndLogo() {
-  const dispatch=useDispatch();
-  function HandleClicked()
-  {
-    dispatch (Checking())
-  }
+ 
 
   return (
-    <div className='flex w-[20%] md:w-[20%] h-full gap-4 md:gap-10 items-center'>
-      <img src={Menu} alt="Menu" className="h-[30%] md:h-[50%] cursor-pointer" onClick={()=>HandleClicked()}/>
-      <img src={Logo} alt="Logo" className="h-[30%] hidden md:block md:h-[50%]" />
-    </div>
+    <h1 className="text-white ml-6 font-extrabold text-1xl lg:text-xl md:text-3xl tracking-wide md:tracking-wider hover:text-gray-300 transition duration-300 ease-in-out">
+    VStreaming
+  </h1>
+  
   );
 }
 
