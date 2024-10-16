@@ -43,12 +43,12 @@ function SearchBar() {
 
   SetResponse([])
  }
- 
+ console.log('length',response.length)
 
   return (
     <div className="w-full flex flex-col items-center relative">
       {/* Search bar container */}
-      <div className="w-[90%] md:w-[60%] lg:w-[50%] h-[45px] flex items-center bg-white border border-gray-300 rounded-full shadow-lg p-1">
+      <div className="w-[80%]  sm:mr-[-100px] md:mr-[-200px] md:w-[60%] lg:w-[50%] h-[40px] sm:h-[45px] flex items-center bg-white border border-gray-300 rounded-full shadow-lg p-1">
         <input
           type="text"
           className="h-full w-full px-4 text-gray-800 text-sm md:text-base outline-none rounded-l-full"
@@ -57,14 +57,14 @@ function SearchBar() {
           onChange={handleChange} // Update query on change
           onKeyDown={handleChange}
         />
-        <button className="h-full px-4 flex items-center justify-center rounded-r-full bg-gray-100 hover:bg-gray-200 transition duration-200">
-          <img src={SearchIcon} className="h-[65%]" alt="Search" />
+        <button className="h-full px-2 sm:px-4 flex items-center justify-center rounded-r-full bg-gray-100 hover:bg-gray-200 transition duration-200" onClick={()=>Navigating(query)}>
+          <img src={SearchIcon} className="h-[50%] sm:h-[65%]" alt="Search"  />
         </button>
       </div>
 
       {/* Display search results */}
-      {Response.length > 0 && (
-        <div className="w-[90%] md:w-[60%] lg:w-[50%] mt-12 absolute z-10 bg-white shadow-lg rounded-lg max-h-[350px] overflow-y-scroll no-scrollbar element-with-scroll">
+      {query.length> 0 && (
+        <div className="w-[90vw] ml-[-100px] md:ml-[200px] mt-[60px] md:w-[60%] lg:w-[50%]  absolute z-10 bg-white shadow-lg rounded-lg max-h-[350px] overflow-y-scroll no-scrollbar element-with-scroll">
           {Response.map((item) => (
             <div
               key={item.id.videoId}

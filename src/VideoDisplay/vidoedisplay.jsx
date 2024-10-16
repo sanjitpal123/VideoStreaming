@@ -41,12 +41,12 @@ function VideoDisplay() {
   console.log("dfd", defaultThumbnail);
 
   return (
-    <div className=" w-full  xl:w-[83%]   xl:ml-[16%] md:flex min-h-[100vh] mt-20 gap-8">
+    <div className=" w-full  lg:ml-[16%] xl:w-[83%] xl:ml-[16%] xl:flex min-h-[100vh] mt-20 gap-8">
       {/* Video Display Section */}
-      <div className="xl:w-[80%] md:w-[90%] flex justify-center items-center w-full mt-10  h-[50vh] sm:h-[90vh]">
+      <div className="w-[100%] xl:w-[80%] md:w-[100%] flex justify-center items-center  mt-10  h-[50vh] sm:h-[90vh]">
         <iframe
           src={videoUrl}
-          className="w-full   h-[100%] lg:h-[70%] cursor-pointer rounded-lg shadow-xl"
+          className="w-[90%]   h-[100%] lg:h-[70%] cursor-pointer rounded-lg shadow-xl"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
@@ -56,7 +56,7 @@ function VideoDisplay() {
       </div>
 
       {/* Recommended Videos Section */}
-      <div className="xl:w-1/3  w-full  overflow-hidden h-[100vh] overflow-y-scroll p-4 bg-gray-900 rounded-lg shadow-lg md:mt-0">
+      <div className="xl:w-1/3  w-full  overflow-hidden h-[100vh] overflow-y-scroll p-4 md:p-7 bg-gray-900 rounded-lg shadow-lg md:mt-0">
         <h2 className="text-lg font-semibold mb-4 text-white">For You</h2>
         <div className="space-y-4">
           {data.map((item) => (

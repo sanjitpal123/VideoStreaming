@@ -80,7 +80,7 @@ function SearchResultDisplay() {
   }
 
   return (
-    <div className="flex flex-wrap gap-6 mt-[70px] w-full lg:ml-[15%] lg:w-[80%] justify-center">
+    <div className="flex flex-wrap gap-6 px-4 py-4 mt-[70px] mx-4 lg:ml-[15%] lg:w-[80%] justify-center">
       {loading && results.length === 0 ? (
         <YoutubeSkeleton />
       ) : results.length > 0 ? (
