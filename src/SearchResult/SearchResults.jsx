@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  Grid,
   Card,
   CardMedia,
   CardContent,
@@ -11,17 +10,18 @@ import {
 import QueryDataFetch from "../Services/FetchQueryData";
 import UploadedTimeCalculate from "../utils/TimeDisplay";
 import { useNavigate } from "react-router-dom";
+import YoutubeSkeleton from "../Loading/Loading"; // Make sure this is the correct path
 
 function SearchResultDisplay() {
   const { Query } = useParams();
-  const Navigator = useNavigate();
+  const navigate = useNavigate();
   const [results, setResults] = useState([]);
-  const [Loading, SetLoading] = useState(false);
-  const [Page, SetPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    FetchData();
-    SetPage(1);
+    fetchData();
+    setPage(1);
   }, [Query]);
 
   useEffect(() => {
@@ -29,9 +29,9 @@ function SearchResultDisplay() {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
           document.documentElement.scrollHeight - 20 &&
-        !Loading
+        !loading
       ) {
-        SetPage((prevPage) => prevPage + 1);
+        setPage((prevPage) => prevPage + 1);
       }
     };
 
@@ -39,51 +39,51 @@ function SearchResultDisplay() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [Loading]);
+  }, [loading]);
 
   useEffect(() => {
-    if (Page > 1) {
-      FetchMoreData();
+    if (page > 1) {
+      fetchMoreData();
     }
-  }, [Page]);
+  }, [page]);
 
-  async function FetchMoreData() {
-    SetLoading(true);
+  async function fetchMoreData() {
+    setLoading(true);
     try {
-      const response = await QueryDataFetch(Page);
+      const response = await QueryDataFetch(page);
       const processedData = UploadedTimeCalculate(response);
       setResults((prevData) => [...prevData, ...processedData]);
     } catch (error) {
       console.error("Error fetching more data:", error);
     } finally {
-      SetLoading(false);
+      setLoading(false);
     }
   }
 
-  async function FetchData() {
-    SetLoading(true);
+  async function fetchData() {
+    setLoading(true);
     try {
       const response = await QueryDataFetch(Query);
-      console.log("response Query", response);
       const processedData = UploadedTimeCalculate(response);
       setResults(processedData);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      SetLoading(false);
+      setLoading(false);
     }
   }
 
   function handle(item) {
     const videoId = item.id.videoId;
     const channelId = item.snippet.channelId;
-    console.log("Video ID:", videoId, "Channel ID:", channelId);
-    Navigator(`/Video/${videoId}/${channelId}`);
+    navigate(`/Video/${videoId}/${channelId}`);
   }
 
   return (
-    <div className="flex flex-wrap gap-6 mt-[70px] ml-[15%] w-[80%] justify-center">
-      {results.length > 0 ? (
+    <div className="flex flex-wrap gap-6 mt-[70px] w-full lg:ml-[15%] lg:w-[80%] justify-center">
+      {loading && results.length === 0 ? (
+        <YoutubeSkeleton />
+      ) : results.length > 0 ? (
         results.map((item, index) => (
           <Card
             sx={{
@@ -112,7 +112,7 @@ function SearchResultDisplay() {
                 alt="Video thumbnail"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = "http://example.com/default.jpg"; // Replace with your fallback URL
+                  e.target.src = "https://example.com/default-fallback.jpg";
                 }}
               />
               <CardContent sx={{ padding: "12px" }}>
@@ -124,27 +124,31 @@ function SearchResultDisplay() {
                     fontSize: "16px",
                     fontWeight: "bold",
                     lineHeight: "1.3",
-                    color: "#FFFFFF", // White color for main title
+                    color: "#FFFFFF",
                     mb: 1,
                   }}
                 >
                   {item.snippet.title?.slice(0, 60) +
                     (item.snippet.title?.length > 60 ? "..." : "")}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "14px", color: "#E5E7EB", mb: 1 }} // Light gray for channel title
-                >
-                  {item.snippet.channelTitle}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "12px", color: "#9CA3AF" }} // Slightly darker gray for time
-                >
-                  {item.timeAgo}
-                </Typography>
+
+                {/* Conditionally hide elements on small devices */}
+                <div className="hidden md:block">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: "14px", color: "#E5E7EB", mb: 1 }}
+                  >
+                    {item.snippet.channelTitle}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: "12px", color: "#9CA3AF" }}
+                  >
+                    {item.timeAgo}
+                  </Typography>
+                </div>
               </CardContent>
             </CardActionArea>
           </Card>

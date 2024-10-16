@@ -3,26 +3,43 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SharedCom from "./Shared/SharedLayout";
 import HomePage from "./Components/HomePageData/HomePageComponent";
-import SearchResultDisplay from "./SearchResult/SearchResults";
-import VideoDisplay from "./VideoDisplay/vidoedisplay";
+import { lazy, Suspense } from "react";
+
+import MyLoader from "./Loading/Loading";
+
+// Lazy-loaded components
+const SearchResultDisplay = lazy(() => import("./SearchResult/SearchResults"));
+const VideoDisplay = lazy(() => import("./VideoDisplay/vidoedisplay"));
+const Home = lazy(() => import("./Components/HomePageData/HomePageData"));
 
 function App() {
   const Clicked = useSelector((state) => state.clickedCheck.clicked);
-  console.log("fdf", Clicked);
+  console.log("Clicked state:", Clicked);
 
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SharedCom />}>
-            <Route index element={<HomePage />} /> 
+            <Route index element={
+              <Suspense fallback={<MyLoader/>}> <HomePage /></Suspense>
+            }/>
             <Route
               path="Search-Query/:Query"
               element={
-                <SearchResultDisplay/>
+                <Suspense fallback={<MyLoader/>}>
+                  <SearchResultDisplay />
+                </Suspense>
               }
             />
-            <Route  path="Video/:videoId/:channelId" element={<VideoDisplay/>}/>
+            <Route
+              path="Video/:videoId/:channelId"
+              element={
+                <Suspense fallback={<MyLoader/>}>
+                  <VideoDisplay />
+                </Suspense>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
