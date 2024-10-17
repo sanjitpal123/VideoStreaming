@@ -46,7 +46,7 @@ function VideoDisplay() {
       <div className="w-[100%] xl:w-[80%] md:w-[100%] flex justify-center items-center  mt-10  h-[50vh] sm:h-[90vh]">
         <iframe
           src={videoUrl}
-          className="w-[90%]   h-[100%] lg:h-[70%] cursor-pointer rounded-lg shadow-xl"
+          className="w-[90%]   h-[70%] lg:h-[70%] cursor-pointer rounded-lg shadow-xl"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
