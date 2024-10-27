@@ -53,6 +53,7 @@ function VideoDisplay() {
 
         {/* Channel Details Section */}
        
+       
       </div>
 
       {/* Recommended Videos Section */}

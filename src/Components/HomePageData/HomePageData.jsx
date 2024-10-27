@@ -10,6 +10,7 @@ function HomePageDataDisplay() {
   const SideBarClickedText = useSelector((state) => state.sidebar.clicked);
   const [Page, SetPage] = useState(1);
   const [Loading, SetLoading] = useState(false);
+  const [hover, setHover] = useState(null);
 
   useEffect(() => {
     Fetching();
@@ -66,6 +67,14 @@ function HomePageDataDisplay() {
     Navigator(`/Video/${id}/${ChannelId}`);
   }
 
+  function handleHover(index) {
+    setHover(index);
+  }
+
+  function handleMouseOut() {
+    setHover(null);
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20 lg:ml-[15%] md:w-[95%]  md:ml-[3%] lg:w-[85%] w-full justify-center bg-gray-900 text-white p-6">
       {Data.length > 0 ? (
@@ -74,14 +83,24 @@ function HomePageDataDisplay() {
             onClick={() => RoutingTovideo(Item.id, Item.snippet.channelId)}
             className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer p-2 m-1"
             key={index}
+            onMouseOver={() => handleHover(index)}
+            onMouseOut={handleMouseOut}
           >
-            <div>
+            <div className="relative h-50">
               <img
                 src={Item.snippet.thumbnails.high.url}
                 alt="Video thumbnail"
                 className="w-full h-48 object-cover rounded-lg"
               />
+              {hover === index && (
+                <div className="w-full absolute top-0 h-full bg-black opacity-85 flex justify-center items-center">
+                  <div className="w-[50px] h-[50px] rounded-full bg-white flex justify-center items-center opacity-100">
+                    <i className="fa-solid fa-play text-pink-400 text-2xl"></i>
+                  </div>
+                </div>
+              )}
             </div>
+
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2">
                 {Item.snippet.title?.slice(0, 60) +
