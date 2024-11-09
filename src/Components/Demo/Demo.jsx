@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch';
 import Paper from '@mui/material/Paper';
 import Collapse from '@mui/material/Collapse'; 
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+ 
 const icon = ( 
   <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>  
     <svg>
